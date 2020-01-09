@@ -24,9 +24,9 @@ defmodule Framer do
     process_data(rx_buffer <> data, [])
   end
 
-  defp process_data(<<message::binary-size(4), rest::binary>>, messages) do
-    process_data(rest, messages ++ [message])
-  end
+  # defp process_data(<<message::binary-size(4), rest::binary>>, messages) do
+  #   process_data(rest, messages ++ [message])
+  # end
 
   #Advantech Error Response
   defp process_data(<<1, 2, 255, error, 0, cs, rest::binary>>, messages) do
