@@ -5,8 +5,8 @@ defmodule Serial.Server do
 
   ####
   # API for Supervisor only
-  def start_link(port) do
-    GenServer.start_link(Serial.Server, port, name: Serial)
+  def start_link([port, name]) do
+    GenServer.start_link(Serial.Server, port, name)
   end
 
   ####
