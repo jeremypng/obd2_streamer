@@ -29,14 +29,14 @@ defmodule Serial.Server do
     errorMsg = Impl.decode_error(error)
     #send to MQTT command channel when ready
     IO.inspect(errorMsg)
-    IO.inspect("ErrorState:", state)
+    IO.inspect(state, label: "ErrorState:")
     {:noreply, state}
   end
 
   #Generic Response
   def handle_info(message, state) do
-    IO.inspect("InfoMsg:", message)
-    IO.inspect("InfoState:", state)
+    IO.inspect(message, label: "InfoMsg:")
+    IO.inspect(state, label: "InfoState:")
     {:noreply, state}
   end
 
