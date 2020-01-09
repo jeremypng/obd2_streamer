@@ -13,6 +13,26 @@ defmodule Serial.Impl do
     # %{uart_pid: pid} = state
     # %{cmd: command} = state
     Circuits.UART.write(pid, command)
-    Circuits.UART.read(pid,2000)
+    # Circuits.UART.read(pid,2000)
   end
+
+  def decode_error(error) do
+    errorMsg = case error do
+      <<0x00>> -> "Incorrect Checksum"
+      <<0x01>> -> "Invalid Command"
+      <<0x02>> -> "Invalid Start of Frame"
+      <<0x03>> -> "Command Parameters out of Range"
+      <<0x04>> -> "Incorrect Number of bytes in the Message"
+      <<0x05>> -> "Obsolete"
+      <<0x06>> -> "Too Many Control Bytes (Out of Range)"
+      <<0x07>> -> "Too Many Data Bytes (Out of Range)"
+      <<0x0B>> -> "System manager image invalid. Update required"
+      <<0x0C>> -> "FPGA image invalid. Update required"
+      <<0x0D>> -> "Database image invalid. Update required"
+      <<0x0E>> -> "Command parameter not supported (may be sent in Standby mode to several commands which are handled properly in regular operating mode)"
+      <<0x0F>> -> "Critical system error (reboot required)"
+    end
+    errorMsg
+  end
+
 end
