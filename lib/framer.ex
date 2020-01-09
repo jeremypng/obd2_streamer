@@ -21,8 +21,8 @@ defmodule Framer do
   def flush(:both, _rx_buffer), do: <<>>
 
   def remove_framing(data, rx_buffer) do
-    IO.inspect("r_frame_data:", data)
-    IO.inspect("r_frame_buffer:", rx_buffer)
+    IO.inspect(data, label: "r_frame_data:")
+    IO.inspect(rx_buffer, label: "r_frame_buffer:")
     process_data(rx_buffer <> data, [])
   end
 
