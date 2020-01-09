@@ -21,7 +21,9 @@ defmodule Serial.Server do
   #Error Response
   def handle_info({:circuits_uart, _port, <<1, 2, 255, error::binary-size(1), 0, _cs::binary-size(1)>>}, state) do
     errorMsg = Impl.decode_error(error)
+    IO.inspect(errorMsg)
     {:noreply, errorMsg}
+    IO.inspect(errorMsg)
   end
 
 end
