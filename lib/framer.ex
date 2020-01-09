@@ -30,7 +30,7 @@ defmodule Framer do
 
   #Advantech Error Response
   defp process_data(<<1, 2, 255, error, 0, cs, rest::binary>>, messages) do
-    process_data(rest, messages ++ <<1, 2, 255, error, 0, cs>>)
+    process_data(rest, messages ++ [<<1, 2, 255, error, 0, cs>>])
   end
 
   defp process_data(<<>>, messages) do
