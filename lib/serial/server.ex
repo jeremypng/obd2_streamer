@@ -15,7 +15,7 @@ defmodule Serial.Server do
   def handle_call({:raw_command, cmd}, _from, state) do
     %{uart_pid: uart_pid} = state
     reply = Impl.raw_command(uart_pid, cmd)
-    {:reply, reply}
+    {:reply, reply, state}
   end
 
 end
