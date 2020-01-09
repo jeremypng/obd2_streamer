@@ -21,8 +21,8 @@ defmodule Framer do
   def flush(:both, _rx_buffer), do: <<>>
 
   def remove_framing(data, rx_buffer) do
-    IO.inspect(data, label: "r_frame_data:")
-    IO.inspect(rx_buffer, label: "r_frame_buffer:")
+    # IO.inspect(data, label: "r_frame_data:")
+    # IO.inspect(rx_buffer, label: "r_frame_buffer:")
     process_data(rx_buffer <> data, [])
   end
 
@@ -36,7 +36,7 @@ defmodule Framer do
   end
 
   defp process_data(<<0x01, control_length, control_data::binary-size(control_length), data_length, data::binary-size(data_length), cs::binary-size(1), rest::binary>>, messages) do
-    IO.puts("matched frame")
+    # IO.puts("matched frame")
     process_data(rest, messages ++ [<<0x01, control_length>> <> control_data <> <<data_length>> <> data <> cs])
   end
 
