@@ -6,12 +6,14 @@ defmodule Serial.Impl do
   def init(port) do
     {:ok, pid} = Circuits.UART.start_link()
     Circuits.UART.open(pid, port, framing: Framer, speed: 115200, active: true)
+    IO.inspect(Circuits.UART.signals(pid))
     {:ok, pid}
   end
 
   def raw_command(pid, command) do
     # %{uart_pid: pid} = state
     # %{cmd: command} = state
+    IO.inspect(Circuits.UART.signals(pid))
     Circuits.UART.write(pid, command)
     # Circuits.UART.read(pid,2000)
   end
