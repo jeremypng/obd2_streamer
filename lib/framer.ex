@@ -37,7 +37,7 @@ defmodule Framer do
 
   defp process_data(<<0x01, control_length, control_data::binary-size(control_length), data_length, data::binary-size(data_length), cs::binary-size(1), rest::binary>>, messages) do
     IO.puts("matched frame")
-    process_data(rest, messages ++ [<<0x01, control_length>> <> control_data <> <<data_length>> <> data <> <<cs>>])
+    process_data(rest, messages ++ [<<0x01, control_length>> <> control_data <> <<data_length>> <> data <> cs])
   end
 
   defp process_data(<<>>, messages) do
