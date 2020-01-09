@@ -5,7 +5,7 @@ defmodule Serial.Impl do
 
   def init(port) do
     {:ok, pid} = Circuits.UART.start_link()
-    Circuits.UART.open(pid, port, speed: 115200, active: false)
+    Circuits.UART.open(pid, port, speed: 115200, active: true)
     {:ok, pid}
   end
 
