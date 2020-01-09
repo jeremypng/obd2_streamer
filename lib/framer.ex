@@ -21,6 +21,8 @@ defmodule Framer do
   def flush(:both, _rx_buffer), do: <<>>
 
   def remove_framing(data, rx_buffer) do
+    IO.inspect(data)
+    IO.inspect(rx_buffer)
     process_data(rx_buffer <> data, [])
   end
 
@@ -31,6 +33,10 @@ defmodule Framer do
   #Advantech Error Response
   defp process_data(<<1, 2, 255, error, 0, cs, rest::binary>>, messages) do
     process_data(rest, messages ++ [<<1, 2, 255, error, 0, cs>>])
+  end
+
+  defp process_data(<<0x01, control_length, control_data::binary-size(control_length), data_length, data::binary-size(data_length), cs::size(1), rest::binary>>, messages) do
+    process_data(rest, messages ++ [<<0x01, control_length>> <> control_data <> <<data_length>> <> data <> <<cs>>])
   end
 
   defp process_data(<<>>, messages) do
