@@ -9,7 +9,7 @@ defmodule Obd2Streamer.Application do
     children = [
       # Starts a worker by calling: Obd2Streamer.Worker.start_link(arg)
       # {Obd2Streamer.Worker, arg}
-      {Serial.Server,["cu.usbserial", name: Serial]}
+      {Serial.Server,"cu.usbserial"}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
