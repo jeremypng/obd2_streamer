@@ -19,7 +19,7 @@ defmodule Serial.Server do
   end
 
   #Error Response
-  def handle_info({:circuits_uart, _port, <<1, 2, 255, error, 0, _cs>>}) do
+  def handle_info({:circuits_uart, _port, <<1, 2, 255, error, 0, _cs>>}, state) do
     errorMsg = Impl.decode_error(error)
     {:noreply, errorMsg}
   end
