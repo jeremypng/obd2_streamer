@@ -4,6 +4,12 @@ defmodule Serial.Server do
   alias Serial.Impl
 
   ####
+  # API for Supervisor only
+  def start_link(port) do
+    GenServer.start_link(Serial.Server, port, name: Serial)
+  end
+
+  ####
   # Contains Server
 
   def init(port) do
