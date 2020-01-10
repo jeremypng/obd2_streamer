@@ -65,8 +65,8 @@ defmodule Serial.Impl do
   def decode_parameters(parameters) do
     param_atoms = []
     param_byte_array = :binary.bin_to_list(parameters)
-    for param = _byte <- param_byte_array, param, do: param_atoms ++ [OBD2.Parameters.get_param_by_id(param)]
-    param_atoms
+    for param = byte <- param_byte_array, byte, do: param_atoms ++ [OBD2.Parameters.get_param_by_id(<<param>>)]
+    # for param = _byte <- param_byte_array, param, do: param_atoms ++ [OBD2.Parameters.get_param_by_id(param)]
   end
 
 

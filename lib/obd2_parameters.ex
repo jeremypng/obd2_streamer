@@ -107,9 +107,124 @@ defmodule OBD2.Parameters do
         :name => "Misfire Monitor",
         :size_bytes => 2,
         :units => "Status",
-        :scale => 1/1
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x11>>,
+        :atom => :fuel_system_monitor,
+        :name => "Fuel System Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x12>>,
+        :atom => :comprehensive_component_monitor,
+        :name => "Comprehensive Component Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x13>>,
+        :atom => :catalyst_monitor,
+        :name => "Catalyst Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x14>>,
+        :atom => :heated_catalyst_monitor,
+        :name => "Heated Catalyst Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x15>>,
+        :atom => :evaporative_system_monitor,
+        :name => "Evaporative System Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x16>>,
+        :atom => :secondary_air_system_monitor,
+        :name => "Secondary Air System Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x17>>,
+        :atom => :ac_system_refrigerant_monitor,
+        :name => "A/C System Refrigerant Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x18>>,
+        :atom => :oxygen_sensor_monitor,
+        :name => "Oxygen Sensor Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x19>>,
+        :atom => :oxygen_sensor_heater_monitor,
+        :name => "Oxygen Sensor Heater Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x1A>>,
+        :atom => :egr_system_monitor,
+        :name => "EGR System Monitor",
+        :size_bytes => 2,
+        :units => "Status",
+        :scale => 1/1,
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+      },
+      %{
+        :id => <<0x1B>>,
+        :atom => :brake_switch_status,
+        :name => "Brake Switch Status",
+        :size_bytes => 2,
+        :units => "Pressed/Not Pressed",
+        :scale => 1/1,
+        :values => [{1, "Brake Switch Off"},{0, "Brake Switch On"}]
+      },
+      %{
+        :id => <<0x22>>,
+        :atom => :trip_odometer,
+        :name => "Trip Odometer",
+        :size_bytes => 4,
+        :units => "Miles",
+        :scale => 1/10
+      },
+      %{
+        :id => <<0x23>>,
+        :atom => :trip_fuel_consumption,
+        :name => "Trip Fuel Consumption",
+        :size_bytes => 4,
+        :units => "Gallons",
+        :scale => 1/128
       }
-
     ]
   end
 
