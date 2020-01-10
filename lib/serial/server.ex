@@ -44,7 +44,7 @@ defmodule Serial.Server do
     IO.inspect(message, label: "InfoMsg:")
     #IO.inspect(state, label: "InfoState:")
     response = case message do
-      <<0x01,0x01,0xA5,0x18,0x00,vin::binary-size(17),_cs>> -> %{vin: Base.decode16(vin)}
+      <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> %{vin: Base.decode16(vin)}
     end
     IO.inspect(response, label: "Info Response:")
     {:noreply, state}
