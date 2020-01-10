@@ -340,6 +340,7 @@ defmodule OBD2.Parameters do
   end
 
   def get_param_by_atom(atom) do
-    for param = %{atom: src_atom} <- table(), src_atom == atom, do: param
+    param_list = for param = %{atom: src_atom} <- table(), src_atom == atom, do: param
+    hd(param_list)
   end
 end
