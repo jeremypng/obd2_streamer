@@ -47,7 +47,7 @@ defmodule OBD2.Parameters do
         :name => "Engine Coolant Temp",
         :size_bytes => 2,
         :units => "F",
-        :scale => 1/64 - 40
+        :scale => :decode_f_temp
       },
       %{
         :id => <<0x08>>,
@@ -210,6 +210,14 @@ defmodule OBD2.Parameters do
         :values => [{1, "Brake Switch Off"},{0, "Brake Switch On"}]
       },
       %{
+        :id => <<0x1C>>,
+        :atom => :ambient_air_temp,
+        :name => "Ambient Air Temperature",
+        :size_bytes => 2,
+        :units => "F",
+        :scale => :decode_f_temp
+      },
+      %{
         :id => <<0x22>>,
         :atom => :trip_odometer,
         :name => "Trip Odometer",
@@ -224,12 +232,111 @@ defmodule OBD2.Parameters do
         :size_bytes => 4,
         :units => "Gallons",
         :scale => 1/128
+      },
+      %{
+        :id => <<0x24>>,
+        :atom => :distance_since_dtc_cleared,
+        :name => "Distance since DTC cleared",
+        :size_bytes => 4,
+        :units => "Miles",
+        :scale => 1/1
+      },
+      %{
+        :id => <<0x25>>,
+        :atom => :transmission_fluid_temp,
+        :name => "Transmission Fluid Temperature",
+        :size_bytes => 2,
+        :units => "F",
+        :scale => :decode_f_temp
+      },
+      %{
+        :id => <<0x26>>,
+        :atom => :oil_life_remaining,
+        :name => "Oil Life Remaining",
+        :size_bytes => 2,
+        :units => "%",
+        :scale => 1/500
+      },
+      %{
+        :id => <<0x27>>,
+        :atom => :tpm_monitoring_status,
+        :name => "Tire Pressure Monitoring Status",
+        :size_bytes => 8,
+        :units => "Normal/Abnormal",
+        :scale => :decode_tpm_monitoring_status
+      },
+      %{
+        :id => <<0x28>>,
+        :atom => :tire_pressures,
+        :name => "Tire Pressures",
+        :size_bytes => 6,
+        :units => "PSI",
+        :scale => :decode_tire_pressures
+      },
+      %{
+        :id => <<0x2A>>,
+        :atom => :barometric_pressure,
+        :name => "Barometric Pressure",
+        :size_bytes => 2,
+        :units => "PSI",
+        :scale => :decode_f_temp
+      },
+      %{
+        :id => <<0x2B>>,
+        :atom => :engine_run_time,
+        :name => "Engine Run Time",
+        :size_bytes => 4,
+        :units => "Seconds",
+        :scale => 1/1
+      },
+      %{
+        :id => <<0x2C>>,
+        :atom => :mpg,
+        :name => "Miles per Gallon",
+        :size_bytes => 2,
+        :units => "MPG",
+        :scale => 1/1
       }
     ]
   end
 
+  def decode_tire_pressures(front_left, front_right, rear_left_outer, rear_left_inner, rear_right_outer, rear_right_inner) do
+    %{
+      :front_left => !!front_left,
+      :front_right => !!front_right,
+      :rear_left_outer => !!rear_left_outer,
+      :rear_left_inner => !!rear_left_inner,
+      :rear_right_outer => !!rear_right_outer,
+      :rear_right_inner => !!rear_right_inner
+    }
+  end
+
+  def decode_tpm_monitoring_status(<<tpm_status, specific_tire_problem_known, front_left, front_right, rear_left_outer, rear_left_inner, rear_right_outer, rear_right_inner>>) do
+    case tpm_status do
+      1 -> %{:tpm_status => :normal}
+      0 -> %{
+          :tpm_status => :abnormal,
+          :specific_tire_problem_known => !!specific_tire_problem_known,
+          :front_left_problem => !!front_left,
+          :front_right_problem => !!front_right,
+          :rear_left_outer_problem => !!rear_left_outer,
+          :rear_left_inner_problem => !!rear_left_inner,
+          :rear_right_outer_problem => !!rear_right_outer,
+          :rear_right_inner_problem => !!rear_right_inner
+        }
+    end
+  end
+
+  def decode_f_temp(temp_raw) do
+    temp_raw/64 - 40
+  end
+
   def get_param_by_id(id) do
-    for param = %{id: src_id} <- table(), src_id == id, do: param
+    result = for param = %{id: src_id} <- table(), src_id == id, do: param
+    case Enum.count(result) do
+      0 -> nil
+      1 -> result
+    end
   end
 
   def get_param_by_atom(atom) do
