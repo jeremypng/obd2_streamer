@@ -18,6 +18,10 @@ defmodule Serial.Impl do
     # Circuits.UART.read(pid,2000)
   end
 
+  def get_vin(pid) do
+    Circuits.UART.write(pid, <<0x01,0x01,0x25,0x01,0x00,0x28>>)
+  end
+
   def decode_error(error) do
     errorMsg = case error do
       <<0x00>> -> "Incorrect Checksum"
