@@ -21,4 +21,8 @@ defmodule Serial do
     GenServer.call(__MODULE__, :redetect_vehicle)
   end
 
+  def command(command) do
+    GenServer.call(__MODULE__, {:command, command})
+  end
+
 end

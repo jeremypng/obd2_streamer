@@ -11,11 +11,14 @@ defmodule Serial.Impl do
   end
 
   def raw_command(pid, command) do
-    # %{uart_pid: pid} = state
-    # %{cmd: command} = state
-    #IO.inspect(Circuits.UART.signals(pid))
     Circuits.UART.write(pid, command)
-    # Circuits.UART.read(pid,2000)
+  end
+
+  def command(pid, command) do
+    case command do
+      :get_supported_parameters -> Circuits.UART.write(pid, <<0x01,0x01,0x20,0x00,0x22>>)
+    end
+    Circuits.UART.write(pid, command)
   end
 
   def get_vin(pid) do
@@ -54,8 +57,19 @@ defmodule Serial.Impl do
       <<0x01,0x01,0x81,0x00,0x83>> -> %{error: :vehicle_not_detected}
       <<0x01,0x01,0xD0,0x00,0xD2>> -> %{error: :ignition_off}
       <<0x01,0x01,0xA3,0x02,ignition_state,aux_obd2,_cs>> -> %{ignition_state: ignition_state, aux_obd2: aux_obd2}
+      <<0x01,0x01,0xA0,data_length,parameters::binary-size(data_length),_cs>> -> %{supported_parameters: decode_parameters(parameters)}
     end
     response
   end
+
+  def decode_parameters(parameters) do
+    param_atoms = []
+    param_byte_array = :binary.bin_to_list(parameters)
+    for param = _byte <- param_byte_array, param, do: param_atoms ++ [OBD2.Parameters.get_param_by_id(param)]
+    param_atoms
+  end
+
+
+
 
 end

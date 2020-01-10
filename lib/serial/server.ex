@@ -36,6 +36,12 @@ defmodule Serial.Server do
     {:reply, reply, state}
   end
 
+  def handle_call({:command, cmd}, _from, state) do
+    %{uart_pid: uart_pid} = state
+    reply = Impl.command(uart_pid, cmd)
+    {:reply, reply, state}
+  end
+
 
   #Error Response
   def handle_info({:circuits_uart, _port, <<1, 2, 255, error::binary-size(1), 0, _cs::binary-size(1)>>}, state) do
