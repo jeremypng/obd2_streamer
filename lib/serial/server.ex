@@ -32,7 +32,7 @@ defmodule Serial.Server do
 
   def handle_call(:redetect_vehicle, _from, state) do
     %{uart_pid: uart_pid} = state
-    reply = Impl.get_vin(uart_pid)
+    reply = Impl.redetect_vehicle(uart_pid)
     {:reply, reply, state}
   end
 
