@@ -17,4 +17,8 @@ defmodule Serial do
     GenServer.call(__MODULE__, :get_vin)
   end
 
+  def redetect_vehicle do
+    GenServer.call(__MODULE__, :redetect_vehicle)
+  end
+
 end

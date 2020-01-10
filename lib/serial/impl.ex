@@ -22,6 +22,10 @@ defmodule Serial.Impl do
     Circuits.UART.write(pid, <<0x01,0x01,0x25,0x01,0x00,0x28>>)
   end
 
+  def get_vin(pid) do
+    Circuits.UART.write(pid, <<0x01,0x01,0x24,0x00,0x26>>)
+  end
+
   def decode_error(error) do
     errorMsg = case error do
       <<0x00>> -> "Incorrect Checksum"
@@ -45,6 +49,9 @@ defmodule Serial.Impl do
     response = case message do
       #VIN response
       <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> %{vin: vin}
+      <<0x01,0x01,0xA4,0x00,0xA6>> -> %{redetect_vehicle: :in_progress}
+      <<0x01,0x01,0x80,0x00,0x82>> -> %{redetect_vehicle: :complete}
+      <<0x01,0x01,0x81,0x00,0x83>> -> %{error: :vehicle_not_detected}
     end
     response
   end
