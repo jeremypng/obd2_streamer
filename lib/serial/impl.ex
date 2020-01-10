@@ -20,6 +20,12 @@ defmodule Serial.Impl do
     end
   end
 
+  def get_parameter(pid, param) do
+    param_id = OBD2.Parameters.get_param_by_atom(param)
+    cs = 25 + param_id
+    Circuits.UART.write(pid,<<0x01,0x01,0x22,0x01,param_id,cs>>)
+  end
+
   def get_vin(pid) do
     Circuits.UART.write(pid, <<0x01,0x01,0x25,0x01,0x00,0x28>>)
   end
@@ -57,6 +63,7 @@ defmodule Serial.Impl do
       <<0x01,0x01,0xD0,0x00,0xD2>> -> %{error: :ignition_off}
       <<0x01,0x01,0xA3,0x02,ignition_state,aux_obd2,_cs>> -> %{ignition_state: ignition_state, aux_obd2: aux_obd2}
       <<0x01,0x01,0xA0,data_length,parameters::binary-size(data_length),_cs>> -> %{supported_parameters: decode_parameters(parameters)}
+      <<0x01,0x01,0xA2,data_length,parameter_data::binary-size(data_length),_cs>> -> parameter_data
     end
     response
   end

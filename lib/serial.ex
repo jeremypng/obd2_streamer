@@ -25,4 +25,8 @@ defmodule Serial do
     GenServer.call(__MODULE__, {:command, command})
   end
 
+  def get_parameter(param) do
+    GenServer.call(__MODULE__, {:get_parameter, param})
+  end
+
 end
