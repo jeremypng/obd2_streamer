@@ -18,7 +18,6 @@ defmodule Serial.Impl do
     case command do
       :get_supported_parameters -> Circuits.UART.write(pid, <<0x01,0x01,0x20,0x00,0x22>>)
     end
-    Circuits.UART.write(pid, command)
   end
 
   def get_vin(pid) do
