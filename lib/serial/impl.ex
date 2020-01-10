@@ -22,7 +22,7 @@ defmodule Serial.Impl do
     Circuits.UART.write(pid, <<0x01,0x01,0x25,0x01,0x00,0x28>>)
   end
 
-  def get_vin(pid) do
+  def redetect_vehicle(pid) do
     Circuits.UART.write(pid, <<0x01,0x01,0x24,0x00,0x26>>)
   end
 
