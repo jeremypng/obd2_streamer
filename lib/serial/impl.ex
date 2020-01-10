@@ -41,4 +41,11 @@ defmodule Serial.Impl do
     errorMsg
   end
 
+  def decode_info_generic(message) do
+    response = case message do
+      <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> %{vin: Base.decode16(vin)}
+    end
+    response
+  end
+
 end

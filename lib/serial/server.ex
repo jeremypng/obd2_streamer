@@ -40,13 +40,10 @@ defmodule Serial.Server do
   end
 
   #Generic Response
-  def handle_info(message, state) do
+  def handle_info({:circuits_uart, _port, message}, state) do
     IO.inspect(message, label: "InfoMsg:")
     #IO.inspect(state, label: "InfoState:")
-    response = case message do
-      <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> %{vin: Base.decode16(vin)}
-    end
-    IO.inspect(response, label: "Info Response:")
+    IO.inspect(Impl.decode_info_generic(message), label: "Info Response:")
     {:noreply, state}
   end
 
