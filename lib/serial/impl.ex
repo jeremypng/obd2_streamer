@@ -53,6 +53,7 @@ defmodule Serial.Impl do
       <<0x01,0x01,0x80,0x00,0x82>> -> %{redetect_vehicle: :complete}
       <<0x01,0x01,0x81,0x00,0x83>> -> %{error: :vehicle_not_detected}
       <<0x01,0x01,0xD0,0x00,0xD2>> -> %{error: :ignition_off}
+      <<0x01,0x01,0xA3,0x02,ignition_state,aux_obd2,_cs>> -> %{ignition_state: ignition_state, aux_obd2: aux_obd2}
     end
     response
   end
