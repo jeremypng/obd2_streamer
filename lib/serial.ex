@@ -14,7 +14,7 @@ defmodule Serial do
   end
 
   def get_vin do
-    GenServer.call(__MODULE__, {:get_vin})
+    GenServer.call(__MODULE__, :get_vin)
   end
 
 end
