@@ -22,7 +22,7 @@ defmodule Serial.Impl do
 
   def get_parameter(pid, param) do
     param_id = OBD2.Parameters.get_param_by_atom(param)
-    cs = 25 + param_id
+    cs = 25 + :binary.decode_unsigned(param_id)
     Circuits.UART.write(pid,<<0x01,0x01,0x22,0x01,param_id,cs>>)
   end
 
