@@ -28,6 +28,23 @@ defmodule Serial.Impl do
     Circuits.UART.write(pid,<<0x01,0x01,0x22,0x01,param_id,cs>>)
   end
 
+  def set_update_mode(pid, param, setting, tvalue) do
+    %{id: <<param_id>>} = OBD2.Parameters.get_param_by_atom(param)
+    setting_bin = case setting do
+      :disabled -> 0
+      :enabled -> 1
+    end
+    tvalue_obd2 = tvalue / 50
+    tvalue_bin = :binary.encode_unsigned(tvalue_obd2)
+    tvalue_final = case byte_size(:binary.encode_unsigned(tvalue_obd2)) do
+      1 -> <<0>> <> tvalue_bin
+      2 -> tvalue_bin
+    end
+    tvalue_list = :binary.bin_to_list(tvalue_final)
+    cs = 36 + param_id + setting_bin + Enum.sum(tvalue_list)
+    Circuits.UART.write(pid,<<0x01,0x01,0x30,0x04,param_id,setting_bin,tvalue_final,cs>>)
+  end
+
   def get_vin(pid) do
     Circuits.UART.write(pid, <<0x01,0x01,0x25,0x01,0x00,0x28>>)
   end
@@ -64,13 +81,14 @@ defmodule Serial.Impl do
       <<0x01,0x01,0x81,0x00,0x83>> -> %{error: :vehicle_not_detected}
       <<0x01,0x01,0xD0,0x00,0xD2>> -> %{error: :ignition_off}
       <<0x01,0x01,0xA3,0x02,ignition_state,aux_obd2,_cs>> -> %{ignition_state: ignition_state, aux_obd2: aux_obd2}
-      <<0x01,0x01,0xA0,data_length,parameters::binary-size(data_length),_cs>> -> %{supported_parameters: decode_parameters(parameters)}
-      <<0x01,0x01,0xA2,data_length,parameter_data::binary-size(data_length),_cs>> -> parameter_data
+      <<0x01,0x01,0xA0,data_length,parameters::binary-size(data_length),_cs>> -> %{supported_parameters: decode_parameter_list(parameters)}
+      <<0x01,0x01,0xA2,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(parameter_data, [])
+      <<0x01,0x01,0xB0,0x04,param_id::binary-size(1),setting::binary-size(1),tvalue::binary-size(2),_cs>> -> decode_update_mode(param_id,setting,tvalue)
     end
     response
   end
 
-  def decode_parameters(parameters) do
+  def decode_parameter_list(parameters) do
     param_atoms = []
     param_byte_array = :binary.bin_to_list(parameters)
     conditions = Enum.map(OBD2.Parameters.table(), fn %{id: v} -> v end)
@@ -78,7 +96,74 @@ defmodule Serial.Impl do
     # for param = _byte <- param_byte_array, param, do: param_atoms ++ [OBD2.Parameters.get_param_by_id(param)]
   end
 
+  def decode_parameter_values(<<param_id::binary-size(1), rest::binary>>, values) do
+    %{atom: param_atom, name: param_name, units: param_units, size_bytes: size_bytes, value_type: param_type, scale: scale} = hd(OBD2.Parameters.get_param_by_id(param_id))
+    <<value_bin::binary-size(size_bytes), rem_rest::binary>> = rest
+    param_val_map = process_parameter_value(param_type, scale, value_bin)
 
+    value_map = %{
+      :atom => param_atom,
+      :name => param_name,
+      :units => param_units,
+      :value => param_val_map
+    }
+    decode_parameter_values(rem_rest, values ++ value_map)
+  end
 
+  def decode_parameter_values(<<>>, results) do
+    results
+  end
+
+  def process_parameter_value(:val_int, :decode_f_temp, val_bin) do
+    val_int = :binary.decode_unsigned(val_bin)
+    value = OBD2.Parameters.decode_f_temp(val_int)
+    %{
+      :val_type => :int,
+      :val => value
+    }
+  end
+
+  def process_parameter_value(:val_int, scale, val_bin) do
+    # IO.inspect(scale,label: "proc_param_val:scale")
+    # IO.inspect(val_bin,label: "proc_param_val:val_bin")
+    # IO.inspect(size_bytes,label: "proc_param_val:size_bytes")
+    val_int = :binary.decode_unsigned(val_bin)
+    # IO.inspect(val_int,label: "proc_param_val:val_int")
+    value = val_int * scale
+    %{
+      :val_type => :int,
+      :val => value
+    }
+  end
+
+  def process_parameter_value(:val_bin, :decode_tpm_monitoring_status, val_bin) do
+    value = OBD2.Parameters.decode_tpm_monitoring_status(val_bin)
+    %{
+      :val_type=> :map,
+      :value=> value
+    }
+  end
+
+  def process_parameter_value(:val_bin, :decode_tire_pressures, val_bin) do
+    value = OBD2.Parameters.decode_tire_pressures(val_bin)
+    %{
+      :val_type=> :map,
+      :value=> value
+    }
+  end
+
+  def decode_update_mode(param_id,setting,tvalue) do
+    %{atom: param_atom, name: param_name} = hd(OBD2.Parameters.get_param_by_id(param_id))
+    %{
+      :atom => param_atom,
+      :name => param_name,
+      :setting => case setting do
+        <<0>> -> :disabled
+        <<1>> -> :enabled
+      end,
+      :tvalue => :binary.decode_unsigned(tvalue) * 50,
+      :units => "ms"
+    }
+  end
 
 end

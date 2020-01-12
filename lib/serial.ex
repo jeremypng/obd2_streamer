@@ -29,4 +29,9 @@ defmodule Serial do
     GenServer.call(__MODULE__, {:get_parameter, param})
   end
 
+  #param=param_atom, settings= :enabled/:disables, tvalue = ms between updates (min 50ms)
+  def set_update_mode(param, settings, tvalue) do
+    GenServer.call(__MODULE__, {:set_update_mode, param, settings, tvalue})
+  end
+
 end

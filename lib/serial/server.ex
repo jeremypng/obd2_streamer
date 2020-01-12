@@ -48,6 +48,12 @@ defmodule Serial.Server do
     {:reply, reply, state}
   end
 
+  def handle_call({:set_update_mode, param, settings, tvalue}, _from, state) do
+    %{uart_pid: uart_pid} = state
+    reply = Impl.set_update_mode(uart_pid, param, settings, tvalue)
+    {:reply, reply, state}
+  end
+
   #Error Response
   def handle_info({:circuits_uart, _port, <<1, 2, 255, error::binary-size(1), 0, _cs::binary-size(1)>>}, state) do
     errorMsg = Impl.decode_error(error)

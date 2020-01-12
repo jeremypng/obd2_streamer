@@ -7,6 +7,7 @@ defmodule OBD2.Parameters do
         :name => "Vehicle Speed",
         :size_bytes => 2,
         :units => "MPH",
+        :value_type => :val_int,
         :scale => 1/410
       },
       %{
@@ -15,6 +16,7 @@ defmodule OBD2.Parameters do
         :name => "Engine Speed",
         :size_bytes => 2,
         :units => "RPM",
+        :value_type => :val_int,
         :scale => 1/4
       },
       %{
@@ -23,6 +25,7 @@ defmodule OBD2.Parameters do
         :name => "Throttle Position",
         :size_bytes => 2,
         :units => "%",
+        :value_type => :val_int,
         :scale => 1/655
       },
       %{
@@ -31,6 +34,7 @@ defmodule OBD2.Parameters do
         :name => "Odometer",
         :size_bytes => 4,
         :units => "Miles",
+        :value_type => :val_int,
         :scale => 1/1
       },
       %{
@@ -39,6 +43,7 @@ defmodule OBD2.Parameters do
         :name => "Fuel Level",
         :size_bytes => 2,
         :units => "%",
+        :value_type => :val_int,
         :scale => 1/655
       },
       %{
@@ -47,6 +52,7 @@ defmodule OBD2.Parameters do
         :name => "Engine Coolant Temp",
         :size_bytes => 2,
         :units => "F",
+        :value_type => :val_int,
         :scale => :decode_f_temp
       },
       %{
@@ -55,6 +61,7 @@ defmodule OBD2.Parameters do
         :name => "Ignition Status",
         :size_bytes => 2,
         :units => "On/Off",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Off"},{0, "On"}]
       },
@@ -64,6 +71,7 @@ defmodule OBD2.Parameters do
         :name => "MIL Status",
         :size_bytes => 2,
         :units => "On/Off",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Off"},{0, "On"}]
       },
@@ -73,6 +81,7 @@ defmodule OBD2.Parameters do
         :name => "Fuel Rate",
         :size_bytes => 2,
         :units => "GPH",
+        :value_type => :val_int,
         :scale => 1/2185
       },
       %{
@@ -81,6 +90,7 @@ defmodule OBD2.Parameters do
         :name => "Battery Voltage",
         :size_bytes => 2,
         :units => "Volts",
+        :value_type => :val_int,
         :scale => 1/3641
       },
       %{
@@ -89,6 +99,7 @@ defmodule OBD2.Parameters do
         :name => "PTO Status",
         :size_bytes => 2,
         :units => "On/Off",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Off"},{0, "On"}]
       },
@@ -98,6 +109,7 @@ defmodule OBD2.Parameters do
         :name => "Seatbelt Fastened",
         :size_bytes => 2,
         :units => "Yes/No",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Unfastened"},{0, "Fastened"}]
       },
@@ -107,6 +119,7 @@ defmodule OBD2.Parameters do
         :name => "Misfire Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -116,6 +129,7 @@ defmodule OBD2.Parameters do
         :name => "Fuel System Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -134,6 +148,7 @@ defmodule OBD2.Parameters do
         :name => "Catalyst Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -143,6 +158,7 @@ defmodule OBD2.Parameters do
         :name => "Heated Catalyst Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -152,6 +168,7 @@ defmodule OBD2.Parameters do
         :name => "Evaporative System Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -161,6 +178,7 @@ defmodule OBD2.Parameters do
         :name => "Secondary Air System Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -170,6 +188,7 @@ defmodule OBD2.Parameters do
         :name => "A/C System Refrigerant Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -179,6 +198,7 @@ defmodule OBD2.Parameters do
         :name => "Oxygen Sensor Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -188,6 +208,7 @@ defmodule OBD2.Parameters do
         :name => "Oxygen Sensor Heater Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -197,6 +218,7 @@ defmodule OBD2.Parameters do
         :name => "EGR System Monitor",
         :size_bytes => 2,
         :units => "Status",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
       },
@@ -206,6 +228,7 @@ defmodule OBD2.Parameters do
         :name => "Brake Switch Status",
         :size_bytes => 2,
         :units => "Pressed/Not Pressed",
+        :value_type => :val_int,
         :scale => 1/1,
         :values => [{1, "Brake Switch Off"},{0, "Brake Switch On"}]
       },
@@ -215,6 +238,7 @@ defmodule OBD2.Parameters do
         :name => "Ambient Air Temperature",
         :size_bytes => 2,
         :units => "F",
+        :value_type => :val_int,
         :scale => :decode_f_temp
       },
       %{
@@ -223,6 +247,7 @@ defmodule OBD2.Parameters do
         :name => "Trip Odometer",
         :size_bytes => 4,
         :units => "Miles",
+        :value_type => :val_int,
         :scale => 1/10
       },
       %{
@@ -231,6 +256,7 @@ defmodule OBD2.Parameters do
         :name => "Trip Fuel Consumption",
         :size_bytes => 4,
         :units => "Gallons",
+        :value_type => :val_int,
         :scale => 1/128
       },
       %{
@@ -239,6 +265,7 @@ defmodule OBD2.Parameters do
         :name => "Distance since DTC cleared",
         :size_bytes => 4,
         :units => "Miles",
+        :value_type => :val_int,
         :scale => 1/1
       },
       %{
@@ -247,6 +274,7 @@ defmodule OBD2.Parameters do
         :name => "Transmission Fluid Temperature",
         :size_bytes => 2,
         :units => "F",
+        :value_type => :val_int,
         :scale => :decode_f_temp
       },
       %{
@@ -255,6 +283,7 @@ defmodule OBD2.Parameters do
         :name => "Oil Life Remaining",
         :size_bytes => 2,
         :units => "%",
+        :value_type => :val_int,
         :scale => 1/500
       },
       %{
@@ -263,6 +292,7 @@ defmodule OBD2.Parameters do
         :name => "Tire Pressure Monitoring Status",
         :size_bytes => 8,
         :units => "Normal/Abnormal",
+        :value_type => :val_bin,
         :scale => :decode_tpm_monitoring_status
       },
       %{
@@ -271,6 +301,7 @@ defmodule OBD2.Parameters do
         :name => "Tire Pressures",
         :size_bytes => 6,
         :units => "PSI",
+        :value_type => :val_bin,
         :scale => :decode_tire_pressures
       },
       %{
@@ -279,6 +310,7 @@ defmodule OBD2.Parameters do
         :name => "Barometric Pressure",
         :size_bytes => 2,
         :units => "PSI",
+        :value_type => :val_int,
         :scale => :decode_f_temp
       },
       %{
@@ -287,6 +319,7 @@ defmodule OBD2.Parameters do
         :name => "Engine Run Time",
         :size_bytes => 4,
         :units => "Seconds",
+        :value_type => :val_int,
         :scale => 1/1
       },
       %{
@@ -295,34 +328,57 @@ defmodule OBD2.Parameters do
         :name => "Miles per Gallon",
         :size_bytes => 2,
         :units => "MPG",
+        :value_type => :val_int,
         :scale => 1/1
       }
     ]
   end
 
-  def decode_tire_pressures(front_left, front_right, rear_left_outer, rear_left_inner, rear_right_outer, rear_right_inner) do
+  def decode_tire_pressures(<<front_left, front_right, rear_left_outer, rear_left_inner, rear_right_inner, rear_right_outer>>) do
     %{
-      :front_left => !!front_left,
-      :front_right => !!front_right,
-      :rear_left_outer => !!rear_left_outer,
-      :rear_left_inner => !!rear_left_inner,
-      :rear_right_outer => !!rear_right_outer,
-      :rear_right_inner => !!rear_right_inner
+      :front_left => front_left,
+      :front_right => front_right,
+      :rear_left_outer => rear_left_outer,
+      :rear_left_inner => rear_left_inner,
+      :rear_right_outer => rear_right_outer,
+      :rear_right_inner => rear_right_inner
     }
   end
 
-  def decode_tpm_monitoring_status(<<tpm_status, specific_tire_problem_known, front_left, front_right, rear_left_outer, rear_left_inner, rear_right_outer, rear_right_inner>>) do
+  def decode_tpm_monitoring_status(<<tpm_status, specific_tire_problem_known, front_left, front_right, rear_left_outer, rear_left_inner, rear_right_inner, rear_right_outer>>) do
+    IO.inspect(specific_tire_problem_known,label: "spec_tire_known")
     case tpm_status do
       1 -> %{:tpm_status => :normal}
       0 -> %{
           :tpm_status => :abnormal,
-          :specific_tire_problem_known => !!specific_tire_problem_known,
-          :front_left_problem => !!front_left,
-          :front_right_problem => !!front_right,
-          :rear_left_outer_problem => !!rear_left_outer,
-          :rear_left_inner_problem => !!rear_left_inner,
-          :rear_right_outer_problem => !!rear_right_outer,
-          :rear_right_inner_problem => !!rear_right_inner
+          :specific_tire_problem_known => case specific_tire_problem_known do
+            0 -> false
+            1 -> true
+          end,
+          :front_left_problem => case front_left do
+            0 -> false
+            1 -> true
+          end,
+          :front_right_problem => case front_right do
+            0 -> false
+            1 -> true
+          end,
+          :rear_left_outer_problem => case rear_left_outer do
+            0 -> false
+            1 -> true
+          end,
+          :rear_left_inner_problem => case rear_left_inner do
+            0 -> false
+            1 -> true
+          end,
+          :rear_right_outer_problem => case rear_right_outer do
+            0 -> false
+            1 -> true
+          end,
+          :rear_right_inner_problem => case rear_right_inner do
+            0 -> false
+            1 -> true
+          end,
         }
     end
   end
