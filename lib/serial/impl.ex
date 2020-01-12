@@ -82,8 +82,10 @@ defmodule Serial.Impl do
       <<0x01,0x01,0xD0,0x00,0xD2>> -> %{error: :ignition_off}
       <<0x01,0x01,0xA3,0x02,ignition_state,aux_obd2,_cs>> -> %{ignition_state: ignition_state, aux_obd2: aux_obd2}
       <<0x01,0x01,0xA0,data_length,parameters::binary-size(data_length),_cs>> -> %{supported_parameters: decode_parameter_list(parameters)}
-      <<0x01,0x01,0xA2,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(parameter_data, [])
+      <<0x01,0x01,0xA2,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:get_param, parameter_data, [])
       <<0x01,0x01,0xB0,0x04,param_id::binary-size(1),setting::binary-size(1),tvalue::binary-size(2),_cs>> -> decode_update_mode(param_id,setting,tvalue)
+      <<0x01,0x01,0xC0,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:timed_update, parameter_data, [])
+      <<0x01,0x01,0xC1,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:threshold_update, parameter_data, [])
     end
     response
   end
@@ -96,7 +98,7 @@ defmodule Serial.Impl do
     # for param = _byte <- param_byte_array, param, do: param_atoms ++ [OBD2.Parameters.get_param_by_id(param)]
   end
 
-  def decode_parameter_values(<<param_id::binary-size(1), rest::binary>>, values) do
+  def decode_parameter_values(update_type, <<param_id::binary-size(1), rest::binary>>, values) do
     %{atom: param_atom, name: param_name, units: param_units, size_bytes: size_bytes, value_type: param_type, scale: scale} = hd(OBD2.Parameters.get_param_by_id(param_id))
     <<value_bin::binary-size(size_bytes), rem_rest::binary>> = rest
     param_val_map = process_parameter_value(param_type, scale, value_bin)
@@ -105,7 +107,8 @@ defmodule Serial.Impl do
       :atom => param_atom,
       :name => param_name,
       :units => param_units,
-      :value => param_val_map
+      :value => param_val_map,
+      :update_type => update_type
     }
     decode_parameter_values(rem_rest, values ++ value_map)
   end
