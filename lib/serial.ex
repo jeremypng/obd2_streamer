@@ -32,7 +32,7 @@ defmodule Serial do
 
   #param=param_atom, settings= :enabled/:disabled, tvalue = ms between updates (min 50ms)
   def set_timed_update_mode(param, settings, tvalue) do
-    GenServer.call(__MODULE__, {:set_update_mode, :timed, param, settings, tvalue})
+    GenServer.call(__MODULE__, {:set_param_update_mode, :timed, param, settings, tvalue})
   end
 
   @doc """
