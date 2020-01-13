@@ -49,6 +49,7 @@ defmodule OBD2.MQTT.Handler do
   end
 
   def handle_message("obd2/command_requests", publish, state) do
+    IO.inspect("command_request")
     Logger.info("#{Enum.join("obd2/command_requests", "/")} #{inspect(publish)}")
     %{command: cmd} = publish
     case cmd do
@@ -58,6 +59,7 @@ defmodule OBD2.MQTT.Handler do
   end
 
   def handle_message(topic, publish, state) do
+    IO.inspect("generic_handler")
     Logger.info("#{Enum.join(topic, "/")} #{inspect(publish)}")
     {:ok, state}
   end
