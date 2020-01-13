@@ -76,7 +76,7 @@ defmodule Serial.Impl do
       1 -> <<0>> <> :binary.encode_unsigned(tvalue_encoded)
       2 -> :binary.encode_unsigned(tvalue_encoded)
     end
-    tvalue_list = :binary.bin_to_list(<<tvalue_encoded>>)
+    tvalue_list = :binary.bin_to_list(tvalue_final)
     <<tval_1,tval_2>> = tvalue_final
     cs = 55 + param_id + setting_val + Enum.sum(tvalue_list)
     IO.inspect(<<0x01,0x01,0x31,0x04,param_id,setting_val,tval_1,tval_2,cs>>, label: "set_thresh_update_raw")
