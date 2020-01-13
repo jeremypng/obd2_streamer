@@ -60,7 +60,7 @@ defmodule OBD2.MQTT.Handler do
       "get_vin" -> Serial.get_vin
       "get_supported_parameters" -> Serial.command(:get_supported_parameters)
       "get_parameter" -> Serial.get_parameter(String.to_atom(param))
-      "set_timed_updated_mode" -> Serial.set_timed_update_mode(String.to_atom(param),String.to_atom(setting), tvalue)
+      "set_timed_update_mode" -> Serial.set_timed_update_mode(String.to_atom(param),String.to_atom(setting), tvalue)
     end
     {:ok, state}
   end
