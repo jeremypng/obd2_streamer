@@ -8,7 +8,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "MPH",
         :value_type => :val_int,
-        :scale => 1/410
+        :scale => 1/410,
+        :mqtt_topic => "obd2/updates/vehicle_speed"
       },
       %{
         :id => <<0x01>>,
@@ -17,7 +18,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "RPM",
         :value_type => :val_int,
-        :scale => 1/4
+        :scale => 1/4,
+        :mqtt_topic => "obd2/updates/engine_speed"
       },
       %{
         :id => <<0x02>>,
@@ -26,7 +28,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "%",
         :value_type => :val_int,
-        :scale => 1/655
+        :scale => 1/655,
+        :mqtt_topic => "obd2/updates/throttle_position"
       },
       %{
         :id => <<0x03>>,
@@ -35,7 +38,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 4,
         :units => "Miles",
         :value_type => :val_int,
-        :scale => 1/1
+        :scale => 1/1,
+        :mqtt_topic => "obd2/updates/odometer"
       },
       %{
         :id => <<0x04>>,
@@ -44,7 +48,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "%",
         :value_type => :val_int,
-        :scale => 1/655
+        :scale => 1/655,
+        :mqtt_topic => "obd2/updates/fuel_level"
       },
       %{
         :id => <<0x07>>,
@@ -53,7 +58,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "F",
         :value_type => :val_int,
-        :scale => :decode_f_temp
+        :scale => :decode_f_temp,
+        :mqtt_topic => "obd2/updates/engine_coolant_temp"
       },
       %{
         :id => <<0x08>>,
@@ -63,7 +69,8 @@ defmodule OBD2.Parameters do
         :units => "On/Off",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Off"},{0, "On"}]
+        :values => [{1, "Off"},{0, "On"}],
+        :mqtt_topic => "obd2/updates/ignition_status"
       },
       %{
         :id => <<0x09>>,
@@ -73,7 +80,8 @@ defmodule OBD2.Parameters do
         :units => "On/Off",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Off"},{0, "On"}]
+        :values => [{1, "Off"},{0, "On"}],
+        :mqtt_topic => "obd2/updates/mil_status"
       },
       %{
         :id => <<0x0C>>,
@@ -82,7 +90,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "GPH",
         :value_type => :val_int,
-        :scale => 1/2185
+        :scale => 1/2185,
+        :mqtt_topic => "obd2/updates/fuel_rate"
       },
       %{
         :id => <<0x0D>>,
@@ -91,7 +100,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "Volts",
         :value_type => :val_int,
-        :scale => 1/3641
+        :scale => 1/3641,
+        :mqtt_topic => "obd2/updates/battery_voltage"
       },
       %{
         :id => <<0x0E>>,
@@ -101,7 +111,8 @@ defmodule OBD2.Parameters do
         :units => "On/Off",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Off"},{0, "On"}]
+        :values => [{1, "Off"},{0, "On"}],
+        :mqtt_topic => "obd2/updates/pto_status"
       },
       %{
         :id => <<0x0F>>,
@@ -111,7 +122,8 @@ defmodule OBD2.Parameters do
         :units => "Yes/No",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Unfastened"},{0, "Fastened"}]
+        :values => [{1, "Unfastened"},{0, "Fastened"}],
+        :mqtt_topic => "obd2/updates/seatbelt_fastened"
       },
       %{
         :id => <<0x10>>,
@@ -121,7 +133,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/misfire_monitor"
       },
       %{
         :id => <<0x11>>,
@@ -131,7 +144,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/fuel_system_monitor"
       },
       %{
         :id => <<0x12>>,
@@ -140,7 +154,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "Status",
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/comprehensive_component_monitor"
       },
       %{
         :id => <<0x13>>,
@@ -150,7 +165,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/catalyst_monitor"
       },
       %{
         :id => <<0x14>>,
@@ -160,7 +176,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/heated_catalyst_monitor"
       },
       %{
         :id => <<0x15>>,
@@ -170,7 +187,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/evaporative_system_monitor"
       },
       %{
         :id => <<0x16>>,
@@ -180,7 +198,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/secondary_air_system_monitor"
       },
       %{
         :id => <<0x17>>,
@@ -190,7 +209,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/ac_system_refrigerant_monitor"
       },
       %{
         :id => <<0x18>>,
@@ -200,7 +220,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/oxygen_system_monitor"
       },
       %{
         :id => <<0x19>>,
@@ -210,7 +231,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/oxygen_sensor_heater_monitor"
       },
       %{
         :id => <<0x1A>>,
@@ -220,7 +242,8 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}]
+        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :mqtt_topic => "obd2/updates/egr_system_monitor"
       },
       %{
         :id => <<0x1B>>,
@@ -230,7 +253,8 @@ defmodule OBD2.Parameters do
         :units => "Pressed/Not Pressed",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Brake Switch Off"},{0, "Brake Switch On"}]
+        :values => [{1, "Brake Switch Off"},{0, "Brake Switch On"}],
+        :mqtt_topic => "obd2/updates/brake_switch_status"
       },
       %{
         :id => <<0x1C>>,
@@ -239,7 +263,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "F",
         :value_type => :val_int,
-        :scale => :decode_f_temp
+        :scale => :decode_f_temp,
+        :mqtt_topic => "obd2/updates/ambient_air_temp"
       },
       %{
         :id => <<0x22>>,
@@ -248,7 +273,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 4,
         :units => "Miles",
         :value_type => :val_int,
-        :scale => 1/10
+        :scale => 1/10,
+        :mqtt_topic => "obd2/updates/trip_odometer"
       },
       %{
         :id => <<0x23>>,
@@ -257,7 +283,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 4,
         :units => "Gallons",
         :value_type => :val_int,
-        :scale => 1/128
+        :scale => 1/128,
+        :mqtt_topic => "obd2/updates/trip_fuel_consumption"
       },
       %{
         :id => <<0x24>>,
@@ -266,7 +293,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 4,
         :units => "Miles",
         :value_type => :val_int,
-        :scale => 1/1
+        :scale => 1/1,
+        :mqtt_topic => "obd2/updates/distance_since_dtc_cleared"
       },
       %{
         :id => <<0x25>>,
@@ -275,7 +303,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "F",
         :value_type => :val_int,
-        :scale => :decode_f_temp
+        :scale => :decode_f_temp,
+        :mqtt_topic => "obd2/updates/transmission_fluid_temp"
       },
       %{
         :id => <<0x26>>,
@@ -284,7 +313,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "%",
         :value_type => :val_int,
-        :scale => 1/500
+        :scale => 1/500,
+        :mqtt_topic => "obd2/updates/oil_life_remaining"
       },
       %{
         :id => <<0x27>>,
@@ -293,7 +323,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 8,
         :units => "Normal/Abnormal",
         :value_type => :val_bin,
-        :scale => :decode_tpm_monitoring_status
+        :scale => :decode_tpm_monitoring_status,
+        :mqtt_topic => "obd2/updates/tpm_monitoring_status"
       },
       %{
         :id => <<0x28>>,
@@ -302,7 +333,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 6,
         :units => "PSI",
         :value_type => :val_bin,
-        :scale => :decode_tire_pressures
+        :scale => :decode_tire_pressures,
+        :mqtt_topic => "obd2/updates/tire_pressures"
       },
       %{
         :id => <<0x2A>>,
@@ -311,7 +343,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "PSI",
         :value_type => :val_int,
-        :scale => :decode_f_temp
+        :scale => :decode_f_temp,
+        :mqtt_topic => "obd2/updates/barometric_pressure"
       },
       %{
         :id => <<0x2B>>,
@@ -320,7 +353,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 4,
         :units => "Seconds",
         :value_type => :val_int,
-        :scale => 1/1
+        :scale => 1/1,
+        :mqtt_topic => "obd2/updates/engine_run_time"
       },
       %{
         :id => <<0x2C>>,
@@ -329,7 +363,8 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "MPG",
         :value_type => :val_int,
-        :scale => 1/1
+        :scale => 1/1,
+        :mqtt_topic => "obd2/updates/mpg"
       }
     ]
   end
