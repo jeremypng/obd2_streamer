@@ -81,13 +81,14 @@ defmodule Serial.Impl do
     Circuits.UART.write(pid,<<0x01,0x01,0x31,0x04,param_id,setting_val,tvalue_final,cs>>)
   end
 
-  def encode_tvalue(scale, tvalue) do
-    tvalue/scale
+  def encode_tvalue(:decode_f_temp, tvalue) do
+    OBD2.Parameters.encode_f_temp(tvalue)
   end
 
-  def encode_tvalue(:decode_f_temp, tvalue) do
-    OBD2.encode_f_temp(tvalue)
+  def encode_tvalue(scale, tvalue) do
+    div(tvalue,scale)
   end
+
 
   def get_vin(pid) do
     Circuits.UART.write(pid, <<0x01,0x01,0x25,0x01,0x00,0x28>>)
