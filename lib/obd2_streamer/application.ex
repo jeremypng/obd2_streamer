@@ -11,9 +11,9 @@ defmodule Obd2Streamer.Application do
       {:client_id, "obd2"},
       {:server, {Tortoise.Transport.Tcp, host: mqtt_host, port: 1883}},
       {:subscriptions, [
-        {"obd2/command_requests",2},
-        {"obd2/updates/timed",0},
-        {"obd2/updates/threshold",1}
+        {"obd2/command_requests",2}
+        # {"obd2/updates/timed",0},
+        # {"obd2/updates/threshold",1}
       ]},
       {:handler, {OBD2.MQTT.Handler, []}}
     ]
