@@ -78,6 +78,7 @@ defmodule Serial.Impl do
     end
     tvalue_list = :binary.bin_to_list(<<tvalue_encoded>>)
     cs = 55 + param_id + setting_val + Enum.sum(tvalue_list)
+    IO.inspect(<<0x01,0x01,0x31,0x04,param_id,setting_val,tvalue_final,cs>>, label: "set_thresh_update_raw")
     Circuits.UART.write(pid,<<0x01,0x01,0x31,0x04,param_id,setting_val,tvalue_final,cs>>)
   end
 
