@@ -76,7 +76,7 @@ defmodule Serial.Impl do
       1 -> <<0>> <> <<tvalue_encoded>>
       2 -> tvalue_encoded
     end
-    IO.inspect(tvalue_final,label: "tval_final")
+    IO.inspect(<<tvalue_final>>,label: "tval_final")
     tvalue_list = :binary.bin_to_list(<<tvalue_encoded>>)
     <<tval_1,tval_2>> = <<tvalue_final>>
     cs = 55 + param_id + setting_val + Enum.sum(tvalue_list)
