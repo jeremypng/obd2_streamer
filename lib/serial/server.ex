@@ -48,7 +48,7 @@ defmodule Serial.Server do
     {:reply, reply, state}
   end
 
-  def handle_call({:set_update_mode, update_type, param, settings, tvalue}, _from, state) do
+  def handle_call({:set_param_update_mode, update_type, param, settings, tvalue}, _from, state) do
     %{uart_pid: uart_pid} = state
     reply = Impl.set_update_mode(uart_pid, update_type, param, settings, tvalue)
     {:reply, reply, state}

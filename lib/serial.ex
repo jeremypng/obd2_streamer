@@ -49,7 +49,7 @@ defmodule Serial do
 
   """
   def set_threshold_update_mode(param, settings, tvalue) do
-    GenServer.call(__MODULE__, {:set_update_mode, :threshold, param, settings, tvalue})
+    GenServer.call(__MODULE__, {:set_param_update_mode, :threshold, param, settings, tvalue})
   end
 
 end
