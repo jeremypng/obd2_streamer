@@ -34,7 +34,8 @@ defmodule Serial.Impl do
       :disabled -> 0
       :enabled -> 1
     end
-    tvalue_obd2 = tvalue / 50
+    tvalue_obd2 = div(tvalue, 50)
+    # tvalue_obd2 = tvalue / 50
     tvalue_bin = :binary.encode_unsigned(tvalue_obd2)
     tvalue_final = case byte_size(:binary.encode_unsigned(tvalue_obd2)) do
       1 -> <<0>> <> tvalue_bin
