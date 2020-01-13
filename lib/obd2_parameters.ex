@@ -387,6 +387,10 @@ defmodule OBD2.Parameters do
     temp_raw/64 - 40
   end
 
+  def encode_f_temp(temp_f) do
+    (temp_f + 40) * 64
+  end
+
   def get_param_by_id(id) do
     result = for param = %{id: src_id} <- table(), src_id == id, do: param
     case Enum.count(result) do

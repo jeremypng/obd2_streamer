@@ -28,7 +28,7 @@ defmodule Serial.Impl do
     Circuits.UART.write(pid,<<0x01,0x01,0x22,0x01,param_id,cs>>)
   end
 
-  def set_update_mode(pid, param, setting, tvalue) do
+  def set_update_mode(pid, :timed, param, setting, tvalue) do
     %{id: <<param_id>>} = OBD2.Parameters.get_param_by_atom(param)
     setting_bin = case setting do
       :disabled -> 0
@@ -43,6 +43,48 @@ defmodule Serial.Impl do
     tvalue_list = :binary.bin_to_list(tvalue_final)
     cs = 36 + param_id + setting_bin + Enum.sum(tvalue_list)
     Circuits.UART.write(pid,<<0x01,0x01,0x30,0x04,param_id,setting_bin,tvalue_final,cs>>)
+  end
+
+  def set_update_mode(pid, :threshold, param, setting, tvalue) do
+    %{id: <<param_id>>, scale: param_scale} = OBD2.Parameters.get_param_by_atom(param)
+    %{thresh_upd: thresh_upd, trigger_high_low: trigger_high_low, control_pin_1: control_pin_1, control_pin_9: control_pin_9, upd_messages: upd_messages} = setting
+    thresh_upd_val = case thresh_upd do
+      :enabled -> 1
+      :disabled -> 0
+    end
+    trigger_high_low_val = case trigger_high_low do
+      :high -> 0
+      :low -> 2
+    end
+    control_pin_1_val = case control_pin_1 do
+      :true -> 4
+      :false -> 0
+    end
+    control_pin_9_val = case control_pin_9 do
+      :true -> 8
+      :false -> 0
+    end
+    upd_messages_val = case upd_messages do
+      :enabled -> 0
+      :disabled -> 16
+    end
+    setting_val = thresh_upd_val + trigger_high_low_val + control_pin_1_val + control_pin_9_val + upd_messages_val
+    tvalue_encoded = encode_tvalue(param_scale, tvalue)
+    tvalue_final = case byte_size(:binary.encode_unsigned(tvalue_encoded)) do
+      1 -> <<0>> <> tvalue_encoded
+      2 -> tvalue_encoded
+    end
+    tvalue_list = :binary.bin_to_list(tvalue_encoded)
+    cs = 55 + param_id + setting_val + Enum.sum(tvalue_list)
+    Circuits.UART.write(pid,<<0x01,0x01,0x31,0x04,param_id,setting_val,tvalue_final,cs>>)
+  end
+
+  def encode_tvalue(scale, tvalue) do
+    tvalue/scale
+  end
+
+  def encode_tvalue(:decode_f_temp, tvalue) do
+    OBD2.encode_f_temp(tvalue)
   end
 
   def get_vin(pid) do
