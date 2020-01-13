@@ -11,11 +11,11 @@ defmodule Obd2Streamer.Application do
       {:client_id, "obd2"},
       {:server, {Tortoise.Transport.Tcp, host: mqtt_host, port: 1883}},
       {:subscriptions, [
-        {"obd2/commands",2},
+        {"obd2/command_requests",2},
         {"obd2/updates/timed",0},
         {"obd2/updates/threshold",1}
       ]},
-      {:handler, {Tortoise.Handler.Logger, []}}
+      {:handler, {OBD2.MQTT.Handler, []}}
     ]
     children = [
       # Starts a worker by calling: Obd2Streamer.Worker.start_link(arg)

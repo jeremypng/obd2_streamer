@@ -125,14 +125,14 @@ defmodule Serial.Impl do
     response = case message do
       #VIN response
       <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> [%{vin: vin},:command]
-      <<0x01,0x01,0xA4,0x00,0xA6>> -> %{:msg_map=>%{redetect_vehicle: :in_progress},:mqtt_topic=>"obd2/commands",:category => :command}
-      <<0x01,0x01,0x80,0x00,0x82>> -> %{:msg_map=>%{redetect_vehicle: :complete},:mqtt_topic=>"obd2/commands",:category=>:command}
-      <<0x01,0x01,0x81,0x00,0x83>> -> %{:msg_map=>%{error: :vehicle_not_detected},:mqtt_topic=>"obd2/commands",:category=>:command}
-      <<0x01,0x01,0xD0,0x00,0xD2>> -> %{:msg_map=>%{error: :ignition_off},:mqtt_topic=>"obd2/commands",:category=>:command}
-      <<0x01,0x01,0xA3,0x02,ignition_state,aux_obd2,_cs>> -> %{:msg_map=>%{ignition_state: ignition_state, aux_obd2: aux_obd2},:mqtt_topic=>"obd2/commands",:category=>:commands}
-      <<0x01,0x01,0xA0,data_length,parameters::binary-size(data_length),_cs>> -> %{:msg_map=>%{supported_parameters: decode_parameter_list(parameters)},:mqtt_topic=>"obd2/commands",:categor=>:command}
+      <<0x01,0x01,0xA4,0x00,0xA6>> -> %{:msg_map=>%{redetect_vehicle: :in_progress},:mqtt_topic=>"obd2/command_response",:category => :command}
+      <<0x01,0x01,0x80,0x00,0x82>> -> %{:msg_map=>%{redetect_vehicle: :complete},:mqtt_topic=>"obd2/command_response",:category=>:command}
+      <<0x01,0x01,0x81,0x00,0x83>> -> %{:msg_map=>%{error: :vehicle_not_detected},:mqtt_topic=>"obd2/command_response",:category=>:command}
+      <<0x01,0x01,0xD0,0x00,0xD2>> -> %{:msg_map=>%{error: :ignition_off},:mqtt_topic=>"obd2/command_response",:category=>:command}
+      <<0x01,0x01,0xA3,0x02,ignition_state,aux_obd2,_cs>> -> %{:msg_map=>%{ignition_state: ignition_state, aux_obd2: aux_obd2},:mqtt_topic=>"obd2/command_response",:category=>:commands}
+      <<0x01,0x01,0xA0,data_length,parameters::binary-size(data_length),_cs>> -> %{:msg_map=>%{supported_parameters: decode_parameter_list(parameters)},:mqtt_topic=>"obd2/command_response",:categor=>:command}
       <<0x01,0x01,0xA2,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:command, parameter_data, [])
-      <<0x01,0x01,0xB0,0x04,param_id::binary-size(1),setting::binary-size(1),tvalue::binary-size(2),_cs>> -> %{:msg_map=>decode_update_mode(param_id,setting,tvalue),:mqtt_topic=>"obd2/commands",:category=>:command}
+      <<0x01,0x01,0xB0,0x04,param_id::binary-size(1),setting::binary-size(1),tvalue::binary-size(2),_cs>> -> %{:msg_map=>decode_update_mode(param_id,setting,tvalue),:mqtt_topic=>"obd2/command_response",:category=>:command}
       <<0x01,0x01,0xC0,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:timed_update, parameter_data, [])
       <<0x01,0x01,0xC1,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:threshold_update, parameter_data, [])
       <<msg::binary>> -> :binary.bin_to_list(msg) #unknown message
