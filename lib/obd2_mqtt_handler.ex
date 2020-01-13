@@ -48,18 +48,19 @@ defmodule OBD2.MQTT.Handler do
     {:ok, state}
   end
 
-  @defaults %{:param => nil}
+  @defaults %{:param => nil, :settings => nil, :tvalue => 0}
 
   def handle_message(["obd2", "command_requests"], publish, state) do
     IO.inspect("command_request")
     Logger.info("#obd2/command_requests #{inspect(publish)}")
     publish_map = Jason.decode!(publish,[{:keys, :atoms}])
-    %{command: cmd, param: param} = merge_defaults(publish_map)
+    %{command: cmd, param: param, settings: setting, tvalue: tvalue} = merge_defaults(publish_map)
     case cmd do
       "redetect_vehicle" -> Serial.redetect_vehicle
       "get_vin" -> Serial.get_vin
       "get_supported_parameters" -> Serial.command(:get_supported_parameters)
       "get_parameter" -> Serial.get_parameter(String.to_atom(param))
+      "set_timed_updated_mode" -> Serial.set_timed_update_mode(String.to_atom(param),String.to_atom(setting), tvalue)
     end
     {:ok, state}
   end
