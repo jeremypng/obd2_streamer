@@ -124,8 +124,8 @@ defmodule Serial.Impl do
   def decode_info_generic(message) do
     response = case message do
       #VIN response
-      <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> [%{vin: vin},:command]
-      <<0x01,0x01,0xA4,0x00,0xA6>> -> %{:msg_map=>%{redetect_vehicle: :in_progress},:mqtt_topic=>"obd2/command_response",:category => :command}
+      <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> %{:msg_map=>%{vin: vin},:mqtt_topic=>"obd2/command_response",:category=>:command}
+      <<0x01,0x01,0xA4,0x00,0xA6>> -> %{:msg_map=>%{redetect_vehicle: :in_progress},:mqtt_topic=>"obd2/command_response",:category=>:command}
       <<0x01,0x01,0x80,0x00,0x82>> -> %{:msg_map=>%{redetect_vehicle: :complete},:mqtt_topic=>"obd2/command_response",:category=>:command}
       <<0x01,0x01,0x81,0x00,0x83>> -> %{:msg_map=>%{error: :vehicle_not_detected},:mqtt_topic=>"obd2/command_response",:category=>:command}
       <<0x01,0x01,0xD0,0x00,0xD2>> -> %{:msg_map=>%{error: :ignition_off},:mqtt_topic=>"obd2/command_response",:category=>:command}
