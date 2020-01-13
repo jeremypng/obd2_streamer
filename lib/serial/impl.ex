@@ -23,8 +23,8 @@ defmodule Serial.Impl do
   def get_parameter(pid, param) do
     %{id: <<param_id>>} = OBD2.Parameters.get_param_by_atom(param)
     cs = 37 + param_id
-    IO.inspect(param_id,label: "get_param_param_id")
-    IO.inspect(cs,label: "get_param_cs")
+    # IO.inspect(param_id,label: "get_param_param_id")
+    # IO.inspect(cs,label: "get_param_cs")
     Circuits.UART.write(pid,<<0x01,0x01,0x22,0x01,param_id,cs>>)
   end
 
