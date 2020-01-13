@@ -73,12 +73,11 @@ defmodule Serial.Impl do
     setting_val = thresh_upd_val + trigger_high_low_val + control_pin_1_val + control_pin_9_val + upd_messages_val
     tvalue_encoded = encode_tvalue(param_scale, tvalue)
     tvalue_final = case byte_size(:binary.encode_unsigned(tvalue_encoded)) do
-      1 -> <<0>> <> <<tvalue_encoded>>
-      2 -> tvalue_encoded
+      1 -> <<0>> <> :binary.encode_unsigned(tvalue_encoded)
+      2 -> :binary.encode_unsigned(tvalue_encoded)
     end
-    IO.inspect(<<tvalue_final>>,label: "tval_final")
     tvalue_list = :binary.bin_to_list(<<tvalue_encoded>>)
-    <<tval_1,tval_2>> = <<tvalue_final>>
+    <<tval_1,tval_2>> = tvalue_final
     cs = 55 + param_id + setting_val + Enum.sum(tvalue_list)
     IO.inspect(<<0x01,0x01,0x31,0x04,param_id,setting_val,tval_1,tval_2,cs>>, label: "set_thresh_update_raw")
     Circuits.UART.write(pid,<<0x01,0x01,0x31,0x04,param_id,setting_val,tval_1,tval_2,cs>>)
