@@ -187,9 +187,10 @@ defmodule Serial.Impl do
     val_int = :binary.decode_unsigned(val_bin)
     # IO.inspect(val_int,label: "proc_param_val:val_int")
     value = val_int * scale
+    value_int = Kernel.trunc(value)
     %{
       :val_type => :int,
-      :val => value
+      :val => value_int
     }
   end
 
