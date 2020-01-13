@@ -58,8 +58,8 @@ defmodule Serial.Server do
   def handle_info({:circuits_uart, _port, <<1, 2, 255, error::binary-size(1), 0, _cs::binary-size(1)>>}, state) do
     errorMsg = Impl.decode_error(error)
     #send to MQTT command channel when ready
-    IO.inspect(errorMsg)
-    Tortoise.publish("obd2", "obd2/command", errorMsg)
+    IO.inspect(errorMsg,label: "ErrorMsg")
+    Tortoise.publish("obd2", "obd2/commands", errorMsg)
     #IO.inspect(state, label: "ErrorState")
     {:noreply, state}
   end
