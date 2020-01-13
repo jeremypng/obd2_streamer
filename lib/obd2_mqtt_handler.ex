@@ -48,7 +48,8 @@ defmodule OBD2.MQTT.Handler do
     {:ok, state}
   end
 
-  def handle_message("obd2/command_requests", publish, state) do
+  def handle_message(<<111, 98, 100, 50, 47, 99, 111, 109, 109, 97, 110, 100, 95, 114, 101, 113, 117,
+  101, 115, 116, 115>>, publish, state) do #using binary representation of topic for pattern match
     IO.inspect("command_request")
     Logger.info("#{Enum.join("obd2/command_requests", "/")} #{inspect(publish)}")
     %{command: cmd} = publish
