@@ -51,10 +51,10 @@ defmodule OBD2.MQTT.Handler do
   def handle_message(["obd2", "command_requests"], publish, state) do
     IO.inspect("command_request")
     Logger.info("#obd2/command_requests #{inspect(publish)}")
-    # IO.inspect(Jason.decode!(publish,[{'keys', 'atoms'}]))
     %{command: cmd} = Jason.decode!(publish,[{:keys, :atoms}])
     case cmd do
       "redetect_vehicle" -> Serial.redetect_vehicle
+      "get_vin" -> Serial.get_vin
     end
     {:ok, state}
   end
