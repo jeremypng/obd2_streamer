@@ -123,7 +123,7 @@ defmodule Serial.Impl do
   def decode_info_generic(message) do
     response = case message do
       #VIN response
-      <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> %{vin: vin}
+      <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> [%{vin: vin},:command]
       <<0x01,0x01,0xA4,0x00,0xA6>> -> [%{redetect_vehicle: :in_progress},:command]
       <<0x01,0x01,0x80,0x00,0x82>> -> [%{redetect_vehicle: :complete},:command]
       <<0x01,0x01,0x81,0x00,0x83>> -> [%{error: :vehicle_not_detected},:command]
