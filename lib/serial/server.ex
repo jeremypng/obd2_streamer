@@ -68,9 +68,15 @@ defmodule Serial.Server do
   def handle_info({:circuits_uart, _port, message}, state) do
     IO.inspect(message, label: "InfoMsg")
     #IO.inspect(state, label: "InfoState")
-    message_map = Impl.decode_info_generic(message)
-    IO.inspect(message_map, label: "Info Response")
-    Tortoise.publish("obd2", "obd2/updates/threshold", Jason.encode!(message_map))
+    message_reply = Impl.decode_info_generic(message)
+    IO.inspect(message_reply, label: "Info Response")
+    message_map = hd(message_reply)
+    topic = case List.last(message_reply) do
+      :command -> "obd2/commands"
+      :timed -> "obd2/updates/timed"
+      :threshold -> "obd2/updates/threshold"
+    end
+    Tortoise.publish("obd2", topic, Jason.encode!(message_map))
     {:noreply, state}
   end
 

@@ -124,17 +124,17 @@ defmodule Serial.Impl do
     response = case message do
       #VIN response
       <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> %{vin: vin}
-      <<0x01,0x01,0xA4,0x00,0xA6>> -> %{redetect_vehicle: :in_progress}
-      <<0x01,0x01,0x80,0x00,0x82>> -> %{redetect_vehicle: :complete}
-      <<0x01,0x01,0x81,0x00,0x83>> -> %{error: :vehicle_not_detected}
-      <<0x01,0x01,0xD0,0x00,0xD2>> -> %{error: :ignition_off}
-      <<0x01,0x01,0xA3,0x02,ignition_state,aux_obd2,_cs>> -> %{ignition_state: ignition_state, aux_obd2: aux_obd2}
-      <<0x01,0x01,0xA0,data_length,parameters::binary-size(data_length),_cs>> -> %{supported_parameters: decode_parameter_list(parameters)}
-      <<0x01,0x01,0xA2,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:get_param, parameter_data, [])
-      <<0x01,0x01,0xB0,0x04,param_id::binary-size(1),setting::binary-size(1),tvalue::binary-size(2),_cs>> -> decode_update_mode(param_id,setting,tvalue)
-      <<0x01,0x01,0xC0,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:timed_update, parameter_data, [])
-      <<0x01,0x01,0xC1,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:threshold_update, parameter_data, [])
-      <<msg::binary>> -> msg #unknown message
+      <<0x01,0x01,0xA4,0x00,0xA6>> -> [%{redetect_vehicle: :in_progress},:command]
+      <<0x01,0x01,0x80,0x00,0x82>> -> [%{redetect_vehicle: :complete},:command]
+      <<0x01,0x01,0x81,0x00,0x83>> -> [%{error: :vehicle_not_detected},:command]
+      <<0x01,0x01,0xD0,0x00,0xD2>> -> [%{error: :ignition_off},:command]
+      <<0x01,0x01,0xA3,0x02,ignition_state,aux_obd2,_cs>> -> [%{ignition_state: ignition_state, aux_obd2: aux_obd2},:threshold]
+      <<0x01,0x01,0xA0,data_length,parameters::binary-size(data_length),_cs>> -> [%{supported_parameters: decode_parameter_list(parameters)},:command]
+      <<0x01,0x01,0xA2,data_length,parameter_data::binary-size(data_length),_cs>> -> [decode_parameter_values(:get_param, parameter_data, []),:command]
+      <<0x01,0x01,0xB0,0x04,param_id::binary-size(1),setting::binary-size(1),tvalue::binary-size(2),_cs>> -> [decode_update_mode(param_id,setting,tvalue),:command]
+      <<0x01,0x01,0xC0,data_length,parameter_data::binary-size(data_length),_cs>> -> [decode_parameter_values(:timed_update, parameter_data, []),:timed]
+      <<0x01,0x01,0xC1,data_length,parameter_data::binary-size(data_length),_cs>> -> [decode_parameter_values(:threshold_update, parameter_data, []),:threshold]
+      <<msg::binary>> -> :binary.bin_to_list(msg) #unknown message
     end
     response
   end
