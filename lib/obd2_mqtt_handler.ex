@@ -60,6 +60,7 @@ defmodule OBD2.MQTT.Handler do
   end
 
   def handle_message(topic, publish, state) do
+    IO.inspect(topic,label: "topic" <> <<0>>)
     IO.inspect("generic_handler")
     Logger.info("#{Enum.join(topic, "/")} #{inspect(publish)}")
     {:ok, state}
