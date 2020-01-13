@@ -76,6 +76,7 @@ defmodule Serial.Impl do
       1 -> <<0>> <> tvalue_encoded
       2 -> tvalue_encoded
     end
+    IO.inspect(tvalue_encoded,label: "set_update_mode_tvalue_encoded")
     tvalue_list = :binary.bin_to_list(tvalue_encoded)
     cs = 55 + param_id + setting_val + Enum.sum(tvalue_list)
     Circuits.UART.write(pid,<<0x01,0x01,0x31,0x04,param_id,setting_val,tvalue_final,cs>>)
