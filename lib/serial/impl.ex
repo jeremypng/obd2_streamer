@@ -86,7 +86,8 @@ defmodule Serial.Impl do
   end
 
   def encode_tvalue(scale, tvalue) do
-    div(tvalue,scale)
+    Kernel.trunc(tvalue/scale)
+
   end
 
 
