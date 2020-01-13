@@ -130,6 +130,7 @@ defmodule Serial.Impl do
       <<0x01,0x01,0xB0,0x04,param_id::binary-size(1),setting::binary-size(1),tvalue::binary-size(2),_cs>> -> decode_update_mode(param_id,setting,tvalue)
       <<0x01,0x01,0xC0,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:timed_update, parameter_data, [])
       <<0x01,0x01,0xC1,data_length,parameter_data::binary-size(data_length),_cs>> -> decode_parameter_values(:threshold_update, parameter_data, [])
+      <<msg::binary>> -> msg #unknown message
     end
     response
   end
