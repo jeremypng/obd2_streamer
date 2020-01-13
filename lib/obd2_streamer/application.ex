@@ -6,9 +6,10 @@ defmodule Obd2Streamer.Application do
   use Application
 
   def start(_type, _args) do
+    mqtt_host = System.get_env("obd2_mqtt_host") || "10.4.200.4"
     mqtt_opts = [
       {:client_id, "obd2"},
-      {:server, {Tortoise.Transport.Tcp, host: '10.4.200.3', port: 1883}},
+      {:server, {Tortoise.Transport.Tcp, host: mqtt_host, port: 1883}},
       {:subscriptions, [
         {"obd2/commands",2},
         {"obd2/updates/timed",0},
