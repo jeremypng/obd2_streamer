@@ -48,14 +48,18 @@ defmodule OBD2.MQTT.Handler do
     {:ok, state}
   end
 
+  @defaults %{:param => nil}
+
   def handle_message(["obd2", "command_requests"], publish, state) do
     IO.inspect("command_request")
     Logger.info("#obd2/command_requests #{inspect(publish)}")
-    %{command: cmd} = Jason.decode!(publish,[{:keys, :atoms}])
+    publish_map = Jason.decode!(publish,[{:keys, :atoms}])
+    %{command: cmd, param: param} = merge_defaults(publish_map)
     case cmd do
       "redetect_vehicle" -> Serial.redetect_vehicle
       "get_vin" -> Serial.get_vin
       "get_supported_parameters" -> Serial.command(:get_supported_parameters)
+      "get_parameter" -> Serial.get_parameter(String.to_atom(param))
     end
     {:ok, state}
   end
@@ -70,5 +74,9 @@ defmodule OBD2.MQTT.Handler do
   def terminate(reason, _state) do
     Logger.warn("Client has been terminated with reason: #{inspect(reason)}")
     :ok
+  end
+
+  defp merge_defaults(map) do
+    Map.merge(@defaults, map)
   end
 end
