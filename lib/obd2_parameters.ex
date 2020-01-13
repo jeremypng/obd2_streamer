@@ -165,7 +165,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/catalyst_monitor"
       },
       %{
@@ -176,7 +176,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/heated_catalyst_monitor"
       },
       %{
@@ -187,7 +187,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/evaporative_system_monitor"
       },
       %{
@@ -198,7 +198,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/secondary_air_system_monitor"
       },
       %{
@@ -209,7 +209,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/ac_system_refrigerant_monitor"
       },
       %{
@@ -220,7 +220,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/oxygen_system_monitor"
       },
       %{
@@ -231,7 +231,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/oxygen_sensor_heater_monitor"
       },
       %{
@@ -253,7 +253,7 @@ defmodule OBD2.Parameters do
         :units => "Pressed/Not Pressed",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [%{:id => 1, :value = "Brake Switch Off"},{:id => 0, :value =>"Brake Switch On"}],
+        :values => [%{:id => 1, :value => "Brake Switch Off"},%{:id => 0, :value =>"Brake Switch On"}],
         :mqtt_topic => "obd2/updates/brake_switch_status"
       },
       %{
