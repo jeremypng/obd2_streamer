@@ -69,7 +69,7 @@ defmodule OBD2.Parameters do
         :units => "On/Off",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Off"},{0, "On"}],
+        :values => [%{:id => 1, :value => "Off"},%{:id => 0, :value => "On"}],
         :mqtt_topic => "obd2/updates/ignition_status"
       },
       %{
@@ -80,7 +80,7 @@ defmodule OBD2.Parameters do
         :units => "On/Off",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Off"},{0, "On"}],
+        :values => [%{:id => 1, :value => "Off"},%{:id => 0, :value => "On"}],
         :mqtt_topic => "obd2/updates/mil_status"
       },
       %{
@@ -111,7 +111,7 @@ defmodule OBD2.Parameters do
         :units => "On/Off",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Off"},{0, "On"}],
+        :values => [%{:id => 1, :value => "Off"},%{:id => 0, :value => "On"}],
         :mqtt_topic => "obd2/updates/pto_status"
       },
       %{
@@ -122,7 +122,7 @@ defmodule OBD2.Parameters do
         :units => "Yes/No",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Unfastened"},{0, "Fastened"}],
+        :values => [%{:id => 1, :value => "Unfastened"},%{:id => 0, :value => "Fastened"}],
         :mqtt_topic => "obd2/updates/seatbelt_fastened"
       },
       %{
@@ -133,7 +133,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/misfire_monitor"
       },
       %{
@@ -144,7 +144,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/fuel_system_monitor"
       },
       %{
@@ -154,7 +154,7 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "Status",
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/comprehensive_component_monitor"
       },
       %{
@@ -165,7 +165,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/catalyst_monitor"
       },
       %{
@@ -176,7 +176,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/heated_catalyst_monitor"
       },
       %{
@@ -187,7 +187,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/evaporative_system_monitor"
       },
       %{
@@ -198,7 +198,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/secondary_air_system_monitor"
       },
       %{
@@ -209,7 +209,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/ac_system_refrigerant_monitor"
       },
       %{
@@ -220,7 +220,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/oxygen_system_monitor"
       },
       %{
@@ -231,7 +231,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        : => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/oxygen_sensor_heater_monitor"
       },
       %{
@@ -242,7 +242,7 @@ defmodule OBD2.Parameters do
         :units => "Status",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Monitor Complete"},{0, "Monitor Not Complete"}],
+        :values => [%{:id => 1, :value => "Monitor Complete"},%{:id => 0, :value => "Monitor Not Complete"}],
         :mqtt_topic => "obd2/updates/egr_system_monitor"
       },
       %{
@@ -253,7 +253,7 @@ defmodule OBD2.Parameters do
         :units => "Pressed/Not Pressed",
         :value_type => :val_int,
         :scale => 1/1,
-        :values => [{1, "Brake Switch Off"},{0, "Brake Switch On"}],
+        :values => [%{:id => 1, :value = "Brake Switch Off"},{:id => 0, :value =>"Brake Switch On"}],
         :mqtt_topic => "obd2/updates/brake_switch_status"
       },
       %{
