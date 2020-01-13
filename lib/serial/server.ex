@@ -70,7 +70,7 @@ defmodule Serial.Server do
     #IO.inspect(state, label: "InfoState")
     message_reply = Impl.decode_info_generic(message)
     IO.inspect(message_reply, label: "Info Response")
-    %{msg_map: message_map, category: _category, mqtt_topic: topic} = (message_reply)
+    %{msg_map: message_map, category: category, mqtt_topic: topic} = (message_reply)
     Tortoise.publish("obd2", topic, Jason.encode!(message_map))
     {:noreply, state}
   end

@@ -55,6 +55,7 @@ defmodule OBD2.MQTT.Handler do
     case cmd do
       "redetect_vehicle" -> Serial.redetect_vehicle
       "get_vin" -> Serial.get_vin
+      "get_supported_parameters" -> Serial.command(:get_supported_parameters)
     end
     {:ok, state}
   end
