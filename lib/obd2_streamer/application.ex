@@ -6,10 +6,11 @@ defmodule Obd2Streamer.Application do
   use Application
 
   def start(_type, _args) do
-    mqtt_host = System.get_env("obd2_mqtt_host") || "10.4.200.4"
+    mqtt_server = Application.fetch_env!(:obd2_streamer, :mqtt_server) || "10.4.200.4"
+    serial_port = Application.fetch_env!(:obd2_streamer, :serial_port) || "cu.usbserial"
     mqtt_opts = [
       {:client_id, "obd2"},
-      {:server, {Tortoise.Transport.Tcp, host: mqtt_host, port: 1883}},
+      {:server, {Tortoise.Transport.Tcp, host: mqtt_server, port: 1883}},
       {:subscriptions, [
         {"obd2/command_requests",2}
         # {"obd2/updates/timed",0},
@@ -20,7 +21,7 @@ defmodule Obd2Streamer.Application do
     children = [
       # Starts a worker by calling: Obd2Streamer.Worker.start_link(arg)
       # {Obd2Streamer.Worker, arg}
-      {Serial.Server,"cu.usbserial"},
+      {Serial.Server,serial_port},
       {Tortoise.Connection,mqtt_opts}
     ]
 

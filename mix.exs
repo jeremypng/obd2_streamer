@@ -7,7 +7,13 @@ defmodule Obd2Streamer.MixProject do
       version: "0.1.0",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      releases: [
+        obd2_streamer: [
+          version: "0.1.0",
+          applications: [obd2_streamer: :permanent]
+        ]
+      ]
     ]
   end
 
@@ -15,6 +21,7 @@ defmodule Obd2Streamer.MixProject do
   def application do
     [
       extra_applications: [:logger],
+      env: [mqtt_server: "",serial_port: ""],
       mod: {Obd2Streamer.Application, []}
     ]
   end
