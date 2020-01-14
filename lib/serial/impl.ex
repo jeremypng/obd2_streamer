@@ -46,7 +46,7 @@ defmodule Serial.Impl do
     tvalue_list = :binary.bin_to_list(tvalue_final)
     <<tval_1,tval_2>> = tvalue_final
     cs = 54 + param_id + setting_bin + Enum.sum(tvalue_list)
-    Logger.info("set_timed_update_raw: #{<<0x01,0x01,0x30,0x04,param_id,setting_bin,tval_1,tval_2,cs>>}")
+    Logger.info("set_timed_update_raw: #{inspect(<<0x01,0x01,0x30,0x04,param_id,setting_bin,tval_1,tval_2,cs>>)}")
     Circuits.UART.write(pid,<<0x01,0x01,0x30,0x04,param_id,setting_bin,tval_1,tval_2,cs>>)
   end
 
@@ -82,7 +82,7 @@ defmodule Serial.Impl do
     tvalue_list = :binary.bin_to_list(tvalue_final)
     <<tval_1,tval_2>> = tvalue_final
     cs = 55 + param_id + setting_val + Enum.sum(tvalue_list)
-    Logger.info("set_thresh_update_raw: #{<<0x01,0x01,0x31,0x04,param_id,setting_val,tval_1,tval_2,cs>>}")
+    Logger.info("set_thresh_update_raw: #{inspect(<<0x01,0x01,0x31,0x04,param_id,setting_val,tval_1,tval_2,cs>>)}")
     Circuits.UART.write(pid,<<0x01,0x01,0x31,0x04,param_id,setting_val,tval_1,tval_2,cs>>)
   end
 
@@ -126,7 +126,7 @@ defmodule Serial.Impl do
   def decode_info_generic(message) do
     response = case message do
       #VIN response
-      <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> %{:msg_map=>%{:vin => vin},:mqtt_topic=>"obd2/command_response",:category=>:command}
+      <<0x01,0x01,0xA5,0x12,0x00,vin::binary-size(17),_cs>> -> %{:msg_map=>%{:vin=>vin},:mqtt_topic=>"obd2/command_response",:category=>:command}
       <<0x01,0x01,0xA4,0x00,0xA6>> -> %{:msg_map=>%{redetect_vehicle: :in_progress},:mqtt_topic=>"obd2/command_response",:category=>:command}
       <<0x01,0x01,0x80,0x00,0x82>> -> %{:msg_map=>%{redetect_vehicle: :complete},:mqtt_topic=>"obd2/command_response",:category=>:command}
       <<0x01,0x01,0x81,0x00,0x83>> -> %{:msg_map=>%{error: :vehicle_not_detected},:mqtt_topic=>"obd2/command_response",:category=>:command}
