@@ -61,7 +61,7 @@ defmodule Serial.Server do
     errorMsg = Impl.decode_error(error)
     #send to MQTT command channel when ready
     Logger.info("ErrorMsg: #{inspect(errorMsg)}")
-    Tortoise.publish("obd2", "obd2/commands", errorMsg)
+    Tortoise.publish("obd2", "obd2/command_reply", errorMsg)
     #IO.inspect(state, label: "ErrorState")
     {:noreply, state}
   end
