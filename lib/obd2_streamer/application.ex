@@ -6,8 +6,8 @@ defmodule Obd2Streamer.Application do
   use Application
 
   def start(_type, _args) do
-    mqtt_server = Application.fetch_env!(:obd2_streamer, :mqtt_server) || "10.4.200.4"
-    serial_port = Application.fetch_env!(:obd2_streamer, :serial_port) || "cu.usbserial"
+    mqtt_server = Application.get_env(:obd2_streamer, :mqtt_server, "10.4.200.4")
+    serial_port = Application.get_env(:obd2_streamer, :serial_port, "cu.usbserial")
     mqtt_opts = [
       {:client_id, "obd2"},
       {:server, {Tortoise.Transport.Tcp, host: mqtt_server, port: 1883}},
