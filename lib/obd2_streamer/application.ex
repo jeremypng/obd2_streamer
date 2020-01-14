@@ -4,10 +4,13 @@ defmodule Obd2Streamer.Application do
   @moduledoc false
 
   use Application
+  require Logger
 
   def start(_type, _args) do
     mqtt_server = Application.fetch_env!(:obd2_streamer, :mqtt_server)
     serial_port = Application.fetch_env!(:obd2_streamer, :serial_port)
+    Logger.info("env => mqtt_server=#{mqtt_server}, serial_port=#{serial_port}")
+
     mqtt_opts = [
       {:client_id, "obd2"},
       {:server, {Tortoise.Transport.Tcp, host: mqtt_server, port: 1883}},

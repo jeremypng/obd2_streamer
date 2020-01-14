@@ -21,7 +21,7 @@ defmodule Obd2Streamer.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      env: [mqtt_server: "",serial_port: ""],
+      env: [mqtt_server: "10.4.200.4",serial_port: "cu.usbserial"],
       mod: {Obd2Streamer.Application, []}
     ]
   end
