@@ -62,7 +62,7 @@ defmodule OBD2.MQTT.Handler do
       "get_parameter" -> Serial.get_parameter(String.to_atom(param))
       "set_timed_update_mode" -> Serial.set_timed_update_mode(String.to_atom(param),String.to_atom(setting), tvalue)
       #this line builds the threshold map if the condition is met. it is really long, sorry.
-      "set_threshold_update_mode" -> Serial.set_threshold_update_mode(String.to_atom(param),%{:thresh_upd => String.to_atom(setting[:thresh_upd]),:trigger_high_low => String.to_atom(setting[:trigger_high_low]),:control_pin_1 => :false,:conftrol_in_9 => :false, :upd_messages => String.to_atom(setting[:upd_messages]) },tvalue)
+      "set_threshold_update_mode" -> Serial.set_threshold_update_mode(String.to_atom(param),%{:thresh_upd => String.to_atom(setting[:thresh_upd]),:trigger_high_low => String.to_atom(setting[:trigger_high_low]),:control_pin_1 => :false,:control_in_9 => :false, :upd_messages => String.to_atom(setting[:upd_messages]) },tvalue)
     end
     {:ok, state}
   end
