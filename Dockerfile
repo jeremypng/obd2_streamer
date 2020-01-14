@@ -38,14 +38,14 @@ ENV LANG=C.UTF-8
 #RUN apt-get update && apt-get install -y openssl
 
 # Copy over the build artifact from the previous step and create a non root user
-RUN useradd --create-home app
+#RUN useradd --create-home app
 
 
 WORKDIR /home/app
 
 COPY --from=app_builder /app/_build .
-RUN chown -R app: ./prod
-USER app
+#RUN chown -R app: ./prod
+#USER app
 
 # Run the app
 CMD ["./prod/rel/obd2_streamer/bin/obd2_streamer", "start"]
