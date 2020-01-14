@@ -50,7 +50,7 @@ defmodule OBD2.MQTT.Handler do
 
   @defaults %{:param => nil, :settings => nil, :tvalue => 0}
   def handle_message(["obd2", "command_requests"], publish, state) do
-    IO.inspect("command_request")
+    Logger.info("command_request")
     Logger.info("#obd2/command_requests #{inspect(publish)}")
     publish_map = Jason.decode!(publish,[{:keys, :atoms}])
     %{command: cmd, param: param, settings: setting, tvalue: tvalue} = merge_defaults(publish_map)
@@ -68,8 +68,8 @@ defmodule OBD2.MQTT.Handler do
   end
 
   def handle_message(topic, publish, state) do
-    IO.inspect(topic,label: "topic" <> <<0>>)
-    IO.inspect("generic_handler")
+    Logger.info("topic: #{topic})
+    Logger.info("generic_handler")
     Logger.info("#{Enum.join(topic, "/")} #{inspect(publish)}")
     {:ok, state}
   end

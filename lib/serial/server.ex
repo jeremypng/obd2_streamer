@@ -1,5 +1,7 @@
 defmodule Serial.Server do
 
+  require Logger
+
   use GenServer
   alias Serial.Impl
 
@@ -58,7 +60,7 @@ defmodule Serial.Server do
   def handle_info({:circuits_uart, _port, <<1, 2, 255, error::binary-size(1), 0, _cs::binary-size(1)>>}, state) do
     errorMsg = Impl.decode_error(error)
     #send to MQTT command channel when ready
-    IO.inspect(errorMsg,label: "ErrorMsg")
+    Logger.info("ErrorMsg: #{errorMsg}")
     Tortoise.publish("obd2", "obd2/commands", errorMsg)
     #IO.inspect(state, label: "ErrorState")
     {:noreply, state}
@@ -66,11 +68,11 @@ defmodule Serial.Server do
 
   #Generic Response
   def handle_info({:circuits_uart, _port, message}, state) do
-    IO.inspect(message, label: "InfoMsg")
+    Logger.info("InfoMsg: #{message}")
     #IO.inspect(state, label: "InfoState")
     message_reply = Impl.decode_info_generic(message)
-    IO.inspect(message_reply, label: "Info Response")
-    %{msg_map: message_map, category: category, mqtt_topic: topic} = (message_reply)
+    Logger.info("Info Response: #{message_reply}")
+    %{msg_map: message_map, category: _category, mqtt_topic: topic} = (message_reply)
     Tortoise.publish("obd2", topic, Jason.encode!(message_map))
     {:noreply, state}
   end

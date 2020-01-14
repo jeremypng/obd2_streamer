@@ -1,5 +1,7 @@
 defmodule Serial.Impl do
 
+  require Logger
+
   ####
   # Contains logic implementation
 
@@ -44,7 +46,7 @@ defmodule Serial.Impl do
     tvalue_list = :binary.bin_to_list(tvalue_final)
     <<tval_1,tval_2>> = tvalue_final
     cs = 54 + param_id + setting_bin + Enum.sum(tvalue_list)
-    IO.inspect(<<0x01,0x01,0x30,0x04,param_id,setting_bin,tval_1,tval_2,cs>>,label: "set_timed_update_raw")
+    Logger.info("set_timed_update_raw: #{<<0x01,0x01,0x30,0x04,param_id,setting_bin,tval_1,tval_2,cs>>}")
     Circuits.UART.write(pid,<<0x01,0x01,0x30,0x04,param_id,setting_bin,tval_1,tval_2,cs>>)
   end
 
@@ -80,7 +82,7 @@ defmodule Serial.Impl do
     tvalue_list = :binary.bin_to_list(tvalue_final)
     <<tval_1,tval_2>> = tvalue_final
     cs = 55 + param_id + setting_val + Enum.sum(tvalue_list)
-    IO.inspect(<<0x01,0x01,0x31,0x04,param_id,setting_val,tval_1,tval_2,cs>>, label: "set_thresh_update_raw")
+    Logger.info("set_thresh_update_raw: #{<<0x01,0x01,0x31,0x04,param_id,setting_val,tval_1,tval_2,cs>>}")
     Circuits.UART.write(pid,<<0x01,0x01,0x31,0x04,param_id,setting_val,tval_1,tval_2,cs>>)
   end
 
