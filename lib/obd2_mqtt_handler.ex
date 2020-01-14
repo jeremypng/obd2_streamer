@@ -49,18 +49,20 @@ defmodule OBD2.MQTT.Handler do
   end
 
   @defaults %{:param => nil, :settings => nil, :tvalue => 0}
-
   def handle_message(["obd2", "command_requests"], publish, state) do
     IO.inspect("command_request")
     Logger.info("#obd2/command_requests #{inspect(publish)}")
     publish_map = Jason.decode!(publish,[{:keys, :atoms}])
     %{command: cmd, param: param, settings: setting, tvalue: tvalue} = merge_defaults(publish_map)
+
     case cmd do
       "redetect_vehicle" -> Serial.redetect_vehicle
       "get_vin" -> Serial.get_vin
       "get_supported_parameters" -> Serial.command(:get_supported_parameters)
       "get_parameter" -> Serial.get_parameter(String.to_atom(param))
       "set_timed_update_mode" -> Serial.set_timed_update_mode(String.to_atom(param),String.to_atom(setting), tvalue)
+      #this line builds the threshold map if the condition is met. it is really long, sorry.
+      "set_threshold_update_mode" -> Serial.set_threshold_update_mode(String.to_atom(param),%{:thresh_upd => String.to_atom(setting[:thresh_upd]),:trigger_high_low => String.to_atom(setting[:trigger_high_low]),:control_pin_1 => :false,:conftrol_in_9 => :false, :upd_messages => String.to_atom(setting[:upd_messages]) },tvalue)
     end
     {:ok, state}
   end
