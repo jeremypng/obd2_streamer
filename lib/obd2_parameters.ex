@@ -28,7 +28,7 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "%",
         :value_type => :val_int,
-        :scale => 1/655,
+        :scale => 1/655*100,
         :mqtt_topic => "obd2/updates/throttle_position"
       },
       %{
@@ -48,7 +48,7 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "%",
         :value_type => :val_int,
-        :scale => 1/655,
+        :scale => 1/655*100,
         :mqtt_topic => "obd2/updates/fuel_level"
       },
       %{
@@ -313,7 +313,7 @@ defmodule OBD2.Parameters do
         :size_bytes => 2,
         :units => "%",
         :value_type => :val_int,
-        :scale => 1/500,
+        :scale => 1/500*100,
         :mqtt_topic => "obd2/updates/oil_life_remaining"
       },
       %{
